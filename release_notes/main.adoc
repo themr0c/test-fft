@@ -1,0 +1,395 @@
+= Release notes and known issues
+:ocp-ver: 4.13
+:ocp-ver-full: 4.13.12
+:prod-ver: 2.27
+:podman-ver: 4.4.4
+:ushift-ver: 4.13.12
+:openshift-docs-url: https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-ver}/html-single
+:prod: Red Hat OpenShift Local
+:rh-prod: Red Hat OpenShift Local
+:attribute-missing: warn
+:bin: crc
+:centos: CentOS
+:context: osl
+:crc-download-url: https://console.redhat.com/openshift/create/local
+:crc-gsg-url: https://access.redhat.com/documentation/en-us/red_hat_openshift_local/{prod-ver}/html-single/getting_started_guide/
+:crc-gsg: Red Hat OpenShift Local Getting Started Guide
+:crc-rn-ki-url: https://access.redhat.com/documentation/en-us/red_hat_openshift_local/{prod-ver}/html-single/release_notes_and_known_issues/
+:crc-rn-ki: Red Hat OpenShift Local Release Notes and Known Issues
+:debian: Debian
+:experimental: true
+:fed: Fedora
+:mac: macOS
+:msw: Microsoft Windows
+:numbered: true
+:oc-download-url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/
+:oc-ver: v{ocp-ver-full}
+:ocp: OpenShift Container Platform
+:odo-docs-url-installing: https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-ver}/html-single/cli_tools/index#installing-odo
+:odo-docs-url-single-component: https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-ver}/html-single/cli_tools/index#creating-a-single-component-application-with-odo
+:odo-docs-url: https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-ver}/html-single/cli_tools/index#understanding-odo
+:openshift-docs-url-landing-page: https://access.redhat.com/documentation/en-us/openshift_container_platform/{ocp-ver}/html-single/getting_started
+:openshift-installer-url: https://console.redhat.com/openshift/install
+:openshift: OpenShift
+:project-context: osl
+:rh: Red Hat
+:rhel-resolved-docs: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/using-different-dns-servers-for-different-domains_configuring-and-managing-networking
+:rhel: Red Hat Enterprise Linux
+:sectanchors: true
+:sectlinks: true
+:source-highlighter: prettify
+:telemetry-notice-url: https://developers.redhat.com/article/tool-data-collection
+:toc: left
+:toclevels: 3
+:ubuntu: Ubuntu
+:ushift: MicroShift
+:prod-ver-full: 2.27.0
+:doctype: book
+:page-component-name: release_notes
+:page-component-version:
+:page-version: {page-component-version}
+:page-component-display-version: default
+:page-component-title: Release notes and known issues
+
+[preface]
+== Making open source more inclusive
+
+Red Hat is committed to replacing problematic language in our code, documentation, and web properties.
+We are beginning with these four terms: master, slave, blacklist, and whitelist.
+Because of the enormity of this endeavor, these changes will be implemented gradually over several upcoming releases.
+For more details, see link:https://www.redhat.com/en/blog/making-open-source-more-inclusive-eradicating-problematic-language[our CTO Chris Wright's message].
+
+:docname: release_notes
+:page-module: release_notes
+:page-relative-src-path: release_notes.adoc
+[#release_notes]
+== Release notes
+
+These are the most important features and bug fixes in the {rh-prod} {prod-ver} product.
+
+[#component_versions]
+=== Component versions
+
+{prod} {prod-ver} has the following versions of the main components:
+
+.{prod}, Component versions
+[cols="2,^",options=header]
+|===
+|Component
+|Version
+
+|{ocp}
+|{ocp-ver-full}
+
+|{openshift} client binary ([command]`oc`)
+|{oc-ver}
+
+|Podman binary
+|{podman-ver}
+|===
+
+[#minimum_system_requirements]
+=== Minimum system requirements
+
+[role="_abstract"]
+{prod} has the following minimum hardware and operating system requirements.
+
+[#hardware_requirements]
+==== Hardware requirements
+
+{prod} is supported on these architectures:
+
+.Preset and architecture compatibility
+|===
+| Preset | AMD64 | Intel 64 | M1
+
+| {ocp}
+| yes
+| yes
+| yes
+
+| {ushift}
+| yes
+| yes
+| yes
+
+| Podman container runtime
+| yes
+| yes
+| yes
+
+|===
+
+{prod} does not support nested virtualization.
+
+Depending on the desired container runtime, {prod} requires the following system resources:
+
+[#for_openshift_container_platform]
+===== For {ocp}
+
+* 4 physical CPU cores
+* 9 GB of free memory
+* 35 GB of storage space
+
+[#for_microshift]
+===== For {ushift}
+
+* 2 physical CPU cores
+* 4 GB of free memory
+* 35 GB of storage space
+
+[NOTE]
+====
+The {ocp} and {ushift} presets require these minimum resources to run in the {prod} instance.
+Some workloads might require more resources.
+To assign more resources to the {prod} instance, see link:{crc-gsg-url}#configuring-the-instance_gsg[Configuring the instance].
+====
+
+[#for_the_podman_container_runtime]
+===== For the Podman container runtime
+
+* 2 physical CPU cores
+* 2 GB of free memory
+* 35 GB of storage space
+
+[#operating_system_requirements]
+==== Operating system requirements
+
+{prod} requires the following minimum version of a supported operating system:
+
+[#requirements_on_microsoft_windows]
+===== Requirements on {msw}
+
+* On {msw}, {prod} requires the Windows 10 Fall Creators Update (version 1709) or later.
+{prod} does not work on earlier versions of {msw}.
+{msw} 10 Home Edition is not supported.
+
+[#requirements_on_macos]
+===== Requirements on {mac}
+
+* On {mac}, {prod} requires {mac} 11 Big Sur or later.
+{prod} does not work on earlier versions of {mac}.
+
+[#requirements_on_linux]
+===== Requirements on Linux
+
+* On Linux, {prod} is supported only on the latest two {rhel}/{centos} 8 and 9 minor releases and on the latest two stable {fed} releases.
+* When using {rhel}, the machine running {prod} must be link:https://access.redhat.com/solutions/253273[registered with the Red Hat Customer Portal].
+* {ubuntu} 18.04 LTS or later and {debian} 10 or later are not supported and might require manual set up of the host machine.
+* See link:{crc-gsg-url}#required-software-packages_gsg[Required software packages] to install the required packages for your Linux distribution.
+
+[#changes_and_improvements]
+=== Changes and improvements
+
+These are some notable changes introduced in {prod} {prod-ver}.
+
+[#notable_enhancements]
+=== Notable enhancements
+
+* You can use {prod} for development and testing purposes.
+
+* {prod} installs on your computer one of these presets:
+
+`openshift`:: A minimal, preconfigured {ocp} {ocp-ver} cluster.
+`microshift`:: {ushift}.
+`podman`:: Podman container runtime.
+
+* The preset runs in a {rhel} virtual machine, on the native hypervisor, on these platforms:
+** Linux
+** {mac}
+** {msw} 10
+
+[#technology_preview]
+=== Technology Preview
+
+Support for these features falls under the link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
+
+* {prod} {prod-ver} includes the ability to create a custom bundle based on the currently running cluster with the [command]`{bin} bundle generate` command.
+This command, its parameters, and behavior might change in incompatible ways in future releases.
+
+
+[#notable_changes]
+=== Notable changes
+
+* {prod} {prod-ver} provides {ocp} {ocp-ver-full} in the embedded {openshift} preset (`openshift`).
+
+* {prod} {prod-ver} provides Podman {podman-ver} in the embedded Podman container engine preset (`podman`).
+
+* {prod} {prod-ver} provides {ushift} {ushift-ver} in the embedded {ushift} preset (`microshift`).
+
+
+:docname: known_issues
+:page-module: release_notes
+:page-relative-src-path: known_issues.adoc
+[#known_issues]
+== Known issues
+
+Issues that users of {prod} {prod-ver} might have, as well as possible workarounds for these issues.
+
+[#general_issues]
+=== General issues
+
+Issues affecting all supported platforms.
+
+[#proxy_settings_are_improperly_applied_to_the_podman_preset]
+==== Proxy settings are improperly applied to the Podman preset
+
+Proxy settings configured by using the [command]`{bin} config set` command are not used by the [command]`podman-remote` binary embedded in {prod} when the Podman preset is in use.
+
+[#red_hat_openshift_local_disables_metrics_by_default]
+==== {prod} disables metrics by default
+
+To ensure {prod} can run on a typical notebook, {prod} disables some resource-heavy services, such as Prometheus and all the related monitoring, alerting, and telemetry functions.
+You can enable these features.
+
+.Procedure
+. See link:{crc-gsg-url}#configuring-the-instance[Configuring the instance] to assign more resources
+. See link:{crc-gsg-url}#starting-monitoring[Starting monitoring]
+
+You cannot disable Monitoring after enabling these features.
+
+.Workaround
+To disable monitoring again:
+
+. Delete the virtual machine:
++
+[subs="+attributes"]
+----
+$ {bin} delete
+----
+. Create a virtual machine:
++
+[subs="+attributes"]
+----
+$ {bin} start
+----
+
+[#enabling_many_operators_requires_more_memory_than_the_default]
+==== Enabling many Operators requires more memory than the default
+
+The [command]`{bin} start` command assigns 9 GiB of memory to the {prod} virtual machine by default.
+Enabling many Operators might increase memory requirements.
+
+.Workaround
+* See link:{crc-gsg-url}#configuring-the-instance[Configuring the instance] to assign additional memory.
+
+[#red_hat_openshift_local_does_not_work_when_the_first_nameserver_is_ipv6]
+==== {prod} does not work when the first `nameserver` is IPv6
+
+DNS resolution to the {prod} virtual machine might fail if the first `nameserver` is IPv6.
+
+.Workaround
+* Specify an IPv4 `nameserver` when starting the {prod} virtual machine by using the `-n` flag:
++
+[subs="+quotes,attributes"]
+----
+$ {bin} start -n 8.8.8.8
+----
+
+[#running_crc_setup_might_give_you_a_known_error]
+==== Running `crc setup` might give you a known error
+
+When you run the `crc setup` command, you might get the following error:
+
+[source,terminal]
+----
+unable to get verified hash for default bundle: Get "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/crc/bundles/openshift/4.12.13/sha256sum.txt.sig": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+----
+
+.Workaround
+* Try running the `crc setup` command till the error is resolved.
+
+
+[#issues_on_microsoft_windows]
+=== Issues on {msw}
+
+This section describes {prod} issues that affect users on a {msw} host.
+
+[#completing_the_installation_after_installation_with_the_microsoft_standard_installer_msi]
+==== Completing the installation after installation with the Microsoft Standard Installer (MSI)
+
+.Procedure
+. Install {prod} with the MSI installer
+. Reboot your computer
+. Run the command in Command Prompt or PowerShell:
++
+[subs="+attributes"]
+----
+$ {bin} setup
+----
+
+[#the_crc_cleanup_command_might_fail_with_a_permission_error]
+==== The [command]`{bin} cleanup` command might fail with a permission error
+
+Running [command]`{bin} setup` followed by [command]`{bin} cleanup`
+without restarting your host computer between commands will cause [command]`{bin} cleanup`
+to report the following error:
+
+----
+Post "http://unix/clean": open \\.\pipe\crc-admin-helper: Access is denied.
+----
+
+.Workaround
+. Reboot your computer
+. Run the command:
++
+[subs="+attributes"]
+----
+$ {bin} cleanup
+----
+
+[#unexpected_behavior_when_run_outside_windrive]
+==== Unexpected behavior when run outside `%WINDRIVE%`
+
+The Hyper-V driver will fail when you start the [command]`{bin}` binary from a network drive.
+
+.Workaround
+* Move the [command]`{bin}` binary to a location on `%WINDRIVE%`.
++
+`%WINDRIVE%` is usually set to `C:\`.
+
+[#red_hat_openshift_local_expects_fulllanguage_support_in_powershell]
+==== {prod} expects `FullLanguage` support in PowerShell
+
+{prod} supports the `ConstrainedLanguage` PowerShell mode with exceptions determined by your system administrator.
+
+[#the_crc_oc_env_command_does_not_work_with_special_characters_in_path]
+==== The `{bin} oc-env` command does not work with special characters in `%PATH%`
+
+On {msw}, PowerShell and Command Prompt do not use the UTF-8 encoding.
+Therefore, running the [command]`{bin} oc-env` command with special characters present in the `%PATH%` will not accurately encode UTF-8 characters.
+
+.Workaround
+* Move the [command]`{bin}` binary to a location containing no special characters.
+
+.Additional resources
+
+* See the {crc-gsg-url}[{crc-gsg}] for an overview of {prod} features and an introduction to *{ocp}*.
+* Report issues with {prod} or request features by using the link:https://bugzilla.redhat.com/enter_bug.cgi?product=OpenShift%20Container%20Platform&component=crc[*{ocp}* product with the `crc` component on {rh} Bugzilla].
+
+[#issues_on_macos]
+=== Issues on {mac}
+
+This section describes {prod} issues that affect users on a {mac} host.
+
+[#hibernation_causes_vm_time_to_desynchronize]
+==== Hibernation causes VM time to desynchronize
+
+Time in the {prod} virtual machine can become desynchronized with the time on your host.
+This issue occurs if the {prod} virtual machine is running when the host machine enters hibernation.
+
+.Workaround
+. Stop the {prod} virtual machine:
++
+[subs="+quotes,attributes"]
+----
+$ {bin} stop
+----
+
+. Restart the {prod} virtual machine:
++
+[subs="+quotes,attributes"]
+----
+$ {bin} start
+----
+
